@@ -1,7 +1,7 @@
 const express = require("express");
 
 const { setTokenCookie, requireAuth } = require("../../utils/auth");
-const { User, Tweet } = require("../../db/models");
+const { User } = require("../../db/models");
 const { check } = require("express-validator");
 const { handleValidationErrors } = require("../../utils/validation");
 
@@ -16,10 +16,7 @@ const validateSignup = [
 		.exists({ checkFalsy: true })
 		.isLength({ min: 4 })
 		.withMessage("Please provide a username with at least 4 characters."),
-	check("username")
-		.not()
-		.isEmail()
-		.withMessage("Username cannot be an email."),
+	check("username").not().isEmail().withMessage("Username cannot be an email."),
 	check("password")
 		.exists({ checkFalsy: true })
 		.isLength({ min: 6 })
@@ -35,18 +32,5 @@ router.post("/", validateSignup, async (req, res) => {
 
 	return res.json(user);
 });
-
-router.get("/:userId/tweets", async(req, res) => {
-    const { userId } = req.params;
-
-    const tweets = await Tweet.findAll({
-        where: {
-            userId
-        }, 
-        include: [{ model: User }, { model: Tweet }]
-    });
-
-    res.json(tweets);
-})
 
 module.exports = router;

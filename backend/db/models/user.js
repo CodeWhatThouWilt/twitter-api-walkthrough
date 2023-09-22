@@ -11,11 +11,6 @@ module.exports = (sequelize, DataTypes) => {
 
 		static associate(models) {
 			// define association here
-			User.hasMany(models.Tweet, {
-				foreignKey: "userId",
-				onDelete: "cascade",
-				hooks: "true",
-			});
 		}
 
 		validatePassword(password) {
@@ -86,12 +81,7 @@ module.exports = (sequelize, DataTypes) => {
 			modelName: "User",
 			defaultScope: {
 				attributes: {
-					exclude: [
-						"hashedPassword",
-						"email",
-						"createdAt",
-						"updatedAt",
-					],
+					exclude: ["hashedPassword", "email", "createdAt", "updatedAt"],
 				},
 			},
 			scopes: {

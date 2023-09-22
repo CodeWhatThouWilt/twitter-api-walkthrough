@@ -1,0 +1,73 @@
+Table Users {
+  id integer PK
+  firstName varchar
+  lastName varchar
+  username varchar
+  email varchar
+  hashedPassword char
+  createdAt timestamp
+  updatedAt timestamp
+}
+
+Table Tweets {
+  id integer PK
+  userId integer
+  quoteTweetId integer
+  content varchar
+  createdAt timestamp
+  updatedAt timestamp
+}
+
+
+Table Reply {
+  id integer PK
+  tweetId integer
+  parentReplyId integer
+  content varchar
+  createdAt timestamp
+  updatedAt timestamp
+}
+
+Table TweetLikes {
+  id integer PK
+  userId integer
+  tweetId integer
+  createdAt timestamp
+  updatedAt timestamp
+}
+
+Table ReplyLikes {
+  id integer PK
+  userId integer
+  replyId integer
+  createdAt timestamp
+  updatedAt timestamp
+}
+
+Table TweetImages {
+  id integer PK
+  userId integer
+  tweetId integer
+  createdAt timestamp
+  updatedAt timestamp
+}
+
+Ref: "Users"."id" < "Tweets"."userId"
+
+Ref: "Tweets"."id" < "Tweets"."quoteTweetId"
+
+Ref: "Tweets"."id" < "Reply"."tweetId"
+
+Ref: "Reply"."id" < "Reply"."parentReplyId"
+
+Ref: "Users"."id" < "TweetLikes"."userId"
+
+Ref: "Tweets"."id" < "TweetLikes"."tweetId"
+
+Ref: "Tweets"."id" < "TweetImages"."tweetId"
+
+Ref: "Users"."id" < "TweetImages"."userId"
+
+Ref: "Reply"."id" < "ReplyLikes"."replyId"
+
+Ref: "Users"."id" < "ReplyLikes"."userId"
