@@ -47,7 +47,6 @@ app.use((_req, _res, next) => {
 	next(err);
 });
 
-
 const { ValidationError } = require("sequelize");
 
 app.use((err, _req, _res, next) => {
@@ -58,6 +57,7 @@ app.use((err, _req, _res, next) => {
 	next(err);
 });
 
+// Formats our errors before sending it out
 app.use((err, _req, res, _next) => {
 	res.status(err.status || 500);
 	console.error(err);
@@ -68,6 +68,5 @@ app.use((err, _req, res, _next) => {
 		stack: isProduction ? null : err.stack,
 	});
 });
-
 
 module.exports = app;

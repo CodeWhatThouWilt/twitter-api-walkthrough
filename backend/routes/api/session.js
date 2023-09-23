@@ -1,6 +1,6 @@
 const express = require("express");
 
-const { setTokenCookie } = require("../../utils/auth");
+const { setTokenCookie, requireAuth } = require("../../utils/auth");
 const { User } = require("../../db/models");
 const { check } = require("express-validator");
 const { handleValidationErrors } = require("../../utils/validation");
@@ -45,7 +45,10 @@ router.get("/", (req, res) => {
 	const { user } = req;
 	if (user) {
 		return res.json(user.toSafeObject());
-	} else return res.json({});
+	} else
+		return res.json({
+			user: null,
+		});
 });
 
 module.exports = router;

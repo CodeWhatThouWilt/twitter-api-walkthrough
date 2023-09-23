@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
 		}
 
 		static associate(models) {
-			// define association here
+			User.hasMany(models.Tweet, { foreignKey: "userId" });
 		}
 
 		validatePassword(password) {
@@ -37,6 +37,16 @@ module.exports = (sequelize, DataTypes) => {
 		}
 
 		static async signup({ username, email, password }) {
+			const existingUser = await User.findOne({
+				where: {
+					email,
+				},
+			});
+
+			if (existingUser) {
+				return false;
+			}
+
 			const hashedPassword = bcrypt.hashSync(password);
 			const user = await User.create({
 				username,
