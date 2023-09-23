@@ -5,7 +5,7 @@ const bcrypt = require("bcryptjs");
 module.exports = (sequelize, DataTypes) => {
 	class User extends Model {
 		toSafeObject() {
-			const { id, username, email } = this; // context will be the User instance
+			const { id, username, email } = this;
 			return { id, username, email };
 		}
 
@@ -52,6 +52,7 @@ module.exports = (sequelize, DataTypes) => {
 			username: {
 				type: DataTypes.STRING,
 				allowNull: false,
+				unique: true,
 				validate: {
 					len: [4, 30],
 					isNotEmail(value) {
@@ -64,6 +65,7 @@ module.exports = (sequelize, DataTypes) => {
 			email: {
 				type: DataTypes.STRING,
 				allowNull: false,
+				unique: true,
 				validate: {
 					len: [3, 256],
 				},

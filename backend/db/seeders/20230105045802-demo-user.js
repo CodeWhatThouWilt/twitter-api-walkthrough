@@ -32,7 +32,7 @@ module.exports = {
 			"Users",
 			{
 				username: {
-					[Op.in]: ["Demo-lition", "FakeUser1", "FakeUser2"],
+					[Op.in]: ["yake", "FakeUser1", "FakeUser2"],
 				},
 			},
 			{}
